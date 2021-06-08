@@ -25,8 +25,7 @@ client.connect(err => {
   const adminCollection = client.db(`${process.env.DB_DATA}`).collection(`${process.env.DB_ADMIN_COLLECTION}`);
   const userCollection = client.db(`${process.env.DB_DATA}`).collection(`${process.env.DB_USER_COLLECTION}`);
   const writerCollection = client.db(`${process.env.DB_DATA}`).collection(`${process.env.DB_CONTENT_WEITER_COLLECTION}`);
-  app.get('/', (req, res) => {
-    console.log(uri)
+  app.get('/', (req, res) => { 
     res.send('Hello World! I am a blogsite api')
   })
 
@@ -70,6 +69,7 @@ client.connect(err => {
 
   app.post('/isAdmin', (req, res) => {
     const email = req.body.email;
+    console.log("email", email)
     adminCollection.find({ email: email })
       .toArray((err, admin) => {
         res.send(admin.length > 0)
@@ -79,6 +79,7 @@ client.connect(err => {
 
   app.post('/isWriter', (req, res) => {
     const email = req.body.email;
+    console.log(email)
     writerCollection.find({ email: email })
       .toArray((err, writer) => {
         res.send(writer.length > 0)
