@@ -111,16 +111,12 @@ client.connect(err => {
             .toArray((err, result) => {
               res.send(result)
             })
-          }
-
-          // ...
+          } 
         })
         .catch((error) => {
           // Handle error
         });
     }
-
-
   })
 
 
