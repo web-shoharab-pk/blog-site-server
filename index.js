@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const admin = require('firebase-admin');
 const MongoClient = require('mongodb').MongoClient;
-const port = 5500
+const port = process.env.PORT || 5500
 require('dotenv').config()
 
 app.use(express.json())
