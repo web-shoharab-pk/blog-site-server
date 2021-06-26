@@ -5,7 +5,7 @@ const admin = require('firebase-admin');
 const MongoClient = require('mongodb').MongoClient;
 const port = process.env.PORT || 5500
 require('dotenv').config()
-
+const ObjectID = require('mongodb').ObjectID
 app.use(express.json())
 app.use(cors())
 
@@ -66,6 +66,15 @@ client.connect(err => {
     //   }) 
   })
 
+  app.delete('/blogsDeletByID/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    blogCollection.removeOne({_id: ObjectID(req.params.id)})
+    .then((result, err) => {
+      console.log(result)
+    })
+    console.log(id)
+  })
 
   app.post('/isAdmin', (req, res) => {
     const email = req.body.email;
@@ -78,8 +87,7 @@ client.connect(err => {
 
 
   app.post('/isWriter', (req, res) => {
-    const email = req.body.email;
-    console.log(email)
+    const email = req.body.email; 
     writerCollection.find({ email: email })
       .toArray((err, writer) => {
         res.send(writer.length > 0)
@@ -96,8 +104,7 @@ client.connect(err => {
 
 
   app.get('/myBlogs', (req, res) => {
-    const bearer = req.headers.authorization
-    console.log(req.query.email)
+    const bearer = req.headers.authorization 
     if (bearer && bearer.startsWith('Bearer ')) {
       const jwtToken = bearer.split(' ')[1]
       // console.log(jwtToken)
